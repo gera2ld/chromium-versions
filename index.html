@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chromium Versions</title>
+  </head>
+  <body>
+    <div id="app" hidden class="!block">
+      <h1 class="font-bold px-4 py-2">
+        Download any version of Chromium from the official snapshots
+      </h1>
+      <div class="flex items-center px-4 py-2 bg-white children:mr-4">
+        <label>
+          Platform:
+          <select v-model="platform">
+            <option
+              v-for="item in platforms"
+              :key="item"
+              :value="item"
+              v-text="item"
+            ></option>
+          </select>
+        </label>
+        <label>
+          Milestone <span class="text-gray-500">(Major version)</span>:
+          <input class="w-16 outline-none border-b hover:border-blue-600" v-model="milestone" />
+        </label>
+        <div v-if="time">
+          Last updated at:
+          <span
+            class="text-green-700"
+            v-text="new Date(time).toLocaleString()"
+          ></span>
+        </div>
+      </div>
+      <div
+        class="grid p-2"
+        style="grid-template-columns: repeat(3, max-content)"
+      >
+        <div
+          class="contents children:px-4 children:py-1 children:sticky children:top-0 children:font-bold children:bg-white children:border-b"
+        >
+          <div class="sticky top-0 font-bold">Milestone</div>
+          <div class="sticky top-0 font-bold">Revision</div>
+          <div class="sticky top-0 font-bold">Actions</div>
+        </div>
+        <template v-for="row in rows">
+          <div class="contents children:px-4 children:py-1">
+            <div v-text="row.milestone"></div>
+            <div v-text="row.revision"></div>
+            <div>
+              <a
+                class="text-blue-600 hover:text-blue-700 hover:underline cursor-pointer"
+                :href="getSnapshotUrl(platform, row.revision)"
+                target="_blank"
+              >
+                Download
+              </a>
+            </div>
+          </div>
+        </template>
+      </div>
+    </div>
+    <script type="module">
+      import { initialize } from 'https://cdn.jsdelivr.net/gh/gera2ld/js-lib@dist/unocss.js';
+      import { githubCorner } from 'https://cdn.jsdelivr.net/gh/gera2ld/js-lib@dist/github-corner.js';
+      import {
+        createApp,
+        ref,
+        computed,
+      } from 'https://cdn.jsdelivr.net/npm/vue@3/dist/vue.esm-browser.prod.js';
+
+      initialize({}, { reset: 'tailwind' });
+      githubCorner('https://github.com/gera2ld/chromium-versions');
+
+      function getSnapshotUrl(platform, revision) {
+        return `https://commondatastorage.googleapis.com/chromium-browser-snapshots/index.html?prefix=${platform}/${revision}/`;
+      }
+
+      async function loadData() {
+        /* loadData */
+        const res = await fetch('data/chrome-data.json');
+        const data = await res.json();
+        return data;
+        /* /loadData */
+      }
+
+      createApp({
+        setup() {
+          const platform = ref();
+          const platforms = ref();
+          const milestone = ref();
+          const time = ref();
+          const fullData = ref();
+          const rows = computed(() => {
+            let data = fullData.value?.filter(
+              (item) => item.platform === platform.value,
+            );
+            if (milestone.value)
+              data = data?.filter((item) =>
+                `${item.milestone}`.includes(milestone.value),
+              );
+            return data;
+          });
+          loadData().then((data) => {
+            time.value = data.time;
+            fullData.value = data.rows;
+            platforms.value = [
+              ...new Set(data.rows.map((item) => item.platform)),
+            ];
+            platform.value = platforms.value[0];
+          });
+          return {
+            platform,
+            platforms,
+            milestone,
+            time,
+            rows,
+            getSnapshotUrl,
+          };
+        },
+      }).mount('#app');
+    </script>
+  </body>
+</html>
