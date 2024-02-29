@@ -13,7 +13,10 @@
       <div class="flex items-center px-4 py-2 bg-white children:mr-4">
         <label>
           Platform:
-          <select class="outline-none border-b hover:border-blue-600 bg-transparent" v-model="platform">
+          <select
+            class="outline-none border-b hover:border-blue-600 bg-transparent"
+            v-model="platform"
+          >
             <option
               v-for="item in platforms"
               :key="item"
@@ -24,7 +27,10 @@
         </label>
         <label>
           Milestone <span class="text-gray-500">(Major version)</span>:
-          <input class="w-16 outline-none border-b hover:border-blue-600" v-model="milestone" />
+          <input
+            class="w-16 outline-none border-b hover:border-blue-600"
+            v-model="milestone"
+          />
         </label>
         <div v-if="time">
           Last updated at:
@@ -86,6 +92,16 @@
         /* /loadData */
       }
 
+      function guessPlatform(platforms) {
+        let os = (
+          navigator.userAgent.match(/(win|linux|mac)/i)?.[1] || 'linux'
+        ).toLowerCase();
+        const platform =
+          platforms.find((platform) => platform.toLowerCase().includes(os)) ||
+          platforms[0];
+        return platform;
+      }
+
       createApp({
         setup() {
           const platform = ref();
@@ -109,7 +125,7 @@
             platforms.value = [
               ...new Set(data.rows.map((item) => item.platform)),
             ];
-            platform.value = platforms.value[0];
+            platform.value = guessPlatform(platforms.value);
           });
           return {
             platform,
