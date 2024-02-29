@@ -7,13 +7,13 @@
   </head>
   <body>
     <div id="app" hidden class="!block">
-      <h1 class="font-bold px-4 py-2">
+      <h1 class="font-bold px-4 py-2 mr-16">
         Download any version of Chromium from the official snapshots
       </h1>
       <div class="flex items-center px-4 py-2 bg-white children:mr-4">
         <label>
           Platform:
-          <select v-model="platform">
+          <select class="outline-none border-b hover:border-blue-600 bg-transparent" v-model="platform">
             <option
               v-for="item in platforms"
               :key="item"
