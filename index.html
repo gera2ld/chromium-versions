@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chromium Versions</title>
+  </head>
+  <body>
+    <div id="app" hidden class="!block">
+      <h1 class="font-bold px-4 py-2 mr-16">
+        Download any version of Chromium from the official snapshots
+      </h1>
+      <div class="flex items-center px-4 py-2 bg-white children:mr-4">
+        <label>
+          Platform:
+          <select
+            class="outline-none border-b hover:border-blue-600 bg-transparent"
+            v-model="platform"
+          >
+            <option
+              v-for="item in platforms"
+              :key="item"
+              :value="item"
+              v-text="item"
+            ></option>
+          </select>
+        </label>
+        <label>
+          Milestone <span class="text-gray-500">(Major version)</span>:
+          <input
+            class="w-16 outline-none border-b hover:border-blue-600"
+            v-model="milestone"
+          />
+        </label>
+        <div v-if="time">
+          Last updated at:
+          <span
+            class="text-green-700"
+            v-text="new Date(time).toLocaleString()"
+          ></span>
+        </div>
+      </div>
+      <div
+        class="grid p-2"
+        style="grid-template-columns: repeat(3, max-content)"
+      >
+        <div
+          class="contents children:px-4 children:py-1 children:sticky children:top-0 children:font-bold children:bg-white children:border-b"
+        >
+          <div class="sticky top-0 font-bold">Milestone</div>
+          <div class="sticky top-0 font-bold">Revision</div>
+          <div class="sticky top-0 font-bold">Actions</div>
+        </div>
+        <template v-for="row in rows">
+          <div class="contents children:px-4 children:py-1">
+            <div v-text="row.milestone"></div>
+            <div v-text="row.revision"></div>
+            <div>
+              <a
+                class="text-blue-600 hover:text-blue-700 hover:underline cursor-pointer"
+                :href="getSnapshotUrl(platform, row.revision)"
+                target="_blank"
+              >
+                Download
+              </a>
+            </div>
+          </div>
+        </template>
+      </div>
+    </div>
+    <script type="module">
+      import { initialize } from 'https://cdn.jsdelivr.net/gh/gera2ld/js-lib@dist/unocss.js';
+      import { githubCorner } from 'https://cdn.jsdelivr.net/gh/gera2ld/js-lib@dist/github-corner.js';
+      import {
+        createApp,
+        ref,
+        computed,
+      } from 'https://cdn.jsdelivr.net/npm/vue@3/dist/vue.esm-browser.prod.js';
+
+      initialize({}, { reset: 'tailwind' });
+      githubCorner('https://github.com/gera2ld/chromium-versions');
+
+      function getSnapshotUrl(platform, revision) {
+        return `https://commondatastorage.googleapis.com/chromium-browser-snapshots/index.html?prefix=${platform}/${revision}/`;
+      }
+
+      async function loadData() {
+        return {"time":1722413404122,"rows":[{"platform":"Mac","revision":1331485,"milestone":128},{"platform":"Linux_x64","revision":1331481,"milestone":128},{"platform":"Win_x64","revision":1331469,"milestone":128},{"platform":"Linux_x64","revision":1313161,"milestone":127},{"platform":"Mac","revision":1313161,"milestone":127},{"platform":"Win_x64","revision":1313161,"milestone":127},{"platform":"Linux_x64","revision":1300309,"milestone":126},{"platform":"Win_x64","revision":1300297,"milestone":126},{"platform":"Mac","revision":1300293,"milestone":126},{"platform":"Mac","revision":1287751,"milestone":125},{"platform":"Win_x64","revision":1287751,"milestone":125},{"platform":"Linux_x64","revision":1287743,"milestone":125},{"platform":"Linux_x64","revision":1274535,"milestone":124},{"platform":"Win_x64","revision":1274518,"milestone":124},{"platform":"Mac","revision":1274511,"milestone":124},{"platform":"Linux_x64","revision":1262506,"milestone":123},{"platform":"Mac","revision":1262506,"milestone":123},{"platform":"Win_x64","revision":1262500,"milestone":123},{"platform":"Linux_x64","revision":1250580,"milestone":122},{"platform":"Mac","revision":1250580,"milestone":122},{"platform":"Win_x64","revision":1250557,"milestone":122},{"platform":"Linux_x64","revision":1233101,"milestone":121},{"platform":"Win_x64","revision":1233095,"milestone":121},{"platform":"Mac","revision":1233090,"milestone":121},{"platform":"Linux_x64","revision":1217362,"milestone":120},{"platform":"Win_x64","revision":1217360,"milestone":120},{"platform":"Mac","revision":1217348,"milestone":120},{"platform":"Linux_x64","revision":1204222,"milestone":119},{"platform":"Mac","revision":1204193,"milestone":119},{"platform":"Win_x64","revision":1204146,"milestone":119},{"platform":"Linux_x64","revision":1192586,"milestone":118},{"platform":"Mac","revision":1192576,"milestone":118},{"platform":"Win_x64","revision":1192564,"milestone":118},{"platform":"Linux_x64","revision":1181205,"milestone":117},{"platform":"Mac","revision":1181205,"milestone":117},{"platform":"Win_x64","revision":1181156,"milestone":117},{"platform":"Linux_x64","revision":1160321,"milestone":116},{"platform":"Mac","revision":1160321,"milestone":116},{"platform":"Win_x64","revision":1160303,"milestone":116},{"platform":"Linux_x64","revision":1148103,"milestone":115},{"platform":"Mac","revision":1148078,"milestone":115},{"platform":"Win_x64","revision":1148033,"milestone":115},{"platform":"Mac","revision":1135562,"milestone":114},{"platform":"Linux_x64","revision":1135561,"milestone":114},{"platform":"Win_x64","revision":1135559,"milestone":114},{"platform":"Linux_x64","revision":1121454,"milestone":113},{"platform":"Mac","revision":1121448,"milestone":113},{"platform":"Win_x64","revision":1121434,"milestone":113},{"platform":"Linux_x64","revision":1109220,"milestone":112},{"platform":"Mac","revision":1109213,"milestone":112},{"platform":"Win_x64","revision":1109208,"milestone":112},{"platform":"Linux_x64","revision":1097615,"milestone":111},{"platform":"Win_x64","revision":1097610,"milestone":111},{"platform":"Mac","revision":1097561,"milestone":111},{"platform":"Linux_x64","revision":1083987,"milestone":110},{"platform":"Win_x64","revision":1083966,"milestone":110},{"platform":"Mac","revision":1083862,"milestone":110},{"platform":"Linux_x64","revision":1070081,"milestone":109},{"platform":"Win_x64","revision":1070054,"milestone":109},{"platform":"Mac","revision":1070019,"milestone":109},{"platform":"Win_x64","revision":1058931,"milestone":108},{"platform":"Linux_x64","revision":1058929,"milestone":108},{"platform":"Mac","revision":1058919,"milestone":108},{"platform":"Linux_x64","revision":1047731,"milestone":107},{"platform":"Mac","revision":1047708,"milestone":107},{"platform":"Win_x64","revision":1047708,"milestone":107},{"platform":"Linux_x64","revision":1036826,"milestone":106},{"platform":"Mac","revision":1036822,"milestone":106},{"platform":"Win_x64","revision":1036788,"milestone":106},{"platform":"Linux_x64","revision":1027016,"milestone":105},{"platform":"Mac","revision":1027007,"milestone":105},{"platform":"Win_x64","revision":1027004,"milestone":105},{"platform":"Mac","revision":1012729,"milestone":104},{"platform":"Linux_x64","revision":1012728,"milestone":104},{"platform":"Win_x64","revision":1012699,"milestone":104},{"platform":"Linux_x64","revision":1002910,"milestone":103},{"platform":"Mac","revision":1002907,"milestone":103},{"platform":"Win_x64","revision":1002885,"milestone":103},{"platform":"Linux_x64","revision":992733,"milestone":102},{"platform":"Win_x64","revision":992732,"milestone":102},{"platform":"Mac","revision":992728,"milestone":102},{"platform":"Linux_x64","revision":982481,"milestone":101},{"platform":"Mac","revision":982480,"milestone":101},{"platform":"Win_x64","revision":982435,"milestone":101},{"platform":"Win_x64","revision":972766,"milestone":100},{"platform":"Linux_x64","revision":972765,"milestone":100},{"platform":"Mac","revision":972753,"milestone":100},{"platform":"Linux_x64","revision":961656,"milestone":99},{"platform":"Mac","revision":961656,"milestone":99},{"platform":"Win_x64","revision":961656,"milestone":99},{"platform":"Linux_x64","revision":950363,"milestone":98},{"platform":"Mac","revision":950345,"milestone":98},{"platform":"Win_x64","revision":950341,"milestone":98},{"platform":"Linux_x64","revision":938549,"milestone":97},{"platform":"Mac","revision":938545,"milestone":97},{"platform":"Win_x64","revision":938545,"milestone":97},{"platform":"Linux_x64","revision":929511,"milestone":96},{"platform":"Win_x64","revision":929483,"milestone":96},{"platform":"Mac","revision":929475,"milestone":96},{"platform":"Mac","revision":919990,"milestone":95},{"platform":"Win_x64","revision":919990,"milestone":95},{"platform":"Linux_x64","revision":919982,"milestone":95},{"platform":"Mac","revision":911515,"milestone":94},{"platform":"Win_x64","revision":911498,"milestone":94},{"platform":"Linux_x64","revision":911494,"milestone":94},{"platform":"Linux_x64","revision":902192,"milestone":93},{"platform":"Mac","revision":902192,"milestone":93},{"platform":"Win_x64","revision":902192,"milestone":93},{"platform":"Win_x64","revision":885282,"milestone":92},{"platform":"Linux_x64","revision":885264,"milestone":92},{"platform":"Mac","revision":885263,"milestone":92},{"platform":"Linux_x64","revision":870763,"milestone":91},{"platform":"Win_x64","revision":870758,"milestone":91},{"platform":"Mac","revision":870752,"milestone":91},{"platform":"Mac","revision":857950,"milestone":90},{"platform":"Linux_x64","revision":857949,"milestone":90},{"platform":"Win_x64","revision":857947,"milestone":90},{"platform":"Linux_x64","revision":843811,"milestone":89},{"platform":"Win_x64","revision":843807,"milestone":89},{"platform":"Mac","revision":843806,"milestone":89},{"platform":"Linux_x64","revision":827102,"milestone":88},{"platform":"Mac","revision":827102,"milestone":88},{"platform":"Win_x64","revision":827102,"milestone":88},{"platform":"Mac","revision":812851,"milestone":87},{"platform":"Linux_x64","revision":812847,"milestone":87},{"platform":"Win_x64","revision":812845,"milestone":87},{"platform":"Linux_x64","revision":800217,"milestone":86},{"platform":"Mac","revision":800208,"milestone":86},{"platform":"Win_x64","revision":800185,"milestone":86},{"platform":"Linux_x64","revision":782790,"milestone":85},{"platform":"Mac","revision":782782,"milestone":85},{"platform":"Win_x64","revision":782776,"milestone":85},{"platform":"Linux_x64","revision":768959,"milestone":84},{"platform":"Win_x64","revision":768952,"milestone":84},{"platform":"Mac","revision":768938,"milestone":84},{"platform":"Linux_x64","revision":756066,"milestone":83},{"platform":"Win_x64","revision":756057,"milestone":83},{"platform":"Mac","revision":756053,"milestone":83},{"platform":"Linux_x64","revision":737173,"milestone":81},{"platform":"Mac","revision":737173,"milestone":81},{"platform":"Win_x64","revision":737173,"milestone":81},{"platform":"Mac","revision":722274,"milestone":80},{"platform":"Win_x64","revision":722274,"milestone":80},{"platform":"Linux_x64","revision":722269,"milestone":80},{"platform":"Linux_x64","revision":706915,"milestone":79},{"platform":"Mac","revision":706915,"milestone":79},{"platform":"Win_x64","revision":706915,"milestone":79},{"platform":"Linux_x64","revision":693954,"milestone":78},{"platform":"Mac","revision":693954,"milestone":78},{"platform":"Win_x64","revision":693951,"milestone":78},{"platform":"Linux_x64","revision":681090,"milestone":77},{"platform":"Mac","revision":681090,"milestone":77},{"platform":"Win_x64","revision":681089,"milestone":77},{"platform":"Mac","revision":665002,"milestone":76},{"platform":"Win_x64","revision":664998,"milestone":76},{"platform":"Linux_x64","revision":664981,"milestone":76},{"platform":"Linux_x64","revision":652421,"milestone":75},{"platform":"Win_x64","revision":652419,"milestone":75},{"platform":"Mac","revision":652398,"milestone":75},{"platform":"Linux_x64","revision":638880,"milestone":74},{"platform":"Mac","revision":638880,"milestone":74},{"platform":"Win_x64","revision":638880,"milestone":74},{"platform":"Linux_x64","revision":625894,"milestone":73},{"platform":"Win_x64","revision":625894,"milestone":73},{"platform":"Mac","revision":625854,"milestone":73},{"platform":"Linux_x64","revision":612434,"milestone":72},{"platform":"Win_x64","revision":612429,"milestone":72},{"platform":"Mac","revision":612398,"milestone":72},{"platform":"Linux_x64","revision":599034,"milestone":71},{"platform":"Mac","revision":599028,"milestone":71},{"platform":"Win_x64","revision":598932,"milestone":71},{"platform":"Linux_x64","revision":587811,"milestone":70},{"platform":"Mac","revision":587811,"milestone":70},{"platform":"Win_x64","revision":587811,"milestone":70},{"platform":"Linux_x64","revision":576753,"milestone":69},{"platform":"Mac","revision":576753,"milestone":69},{"platform":"Win_x64","revision":576753,"milestone":69},{"platform":"Mac","revision":561733,"milestone":68},{"platform":"Linux_x64","revision":561732,"milestone":68},{"platform":"Win_x64","revision":561727,"milestone":68},{"platform":"Linux_x64","revision":550422,"milestone":67},{"platform":"Mac","revision":550418,"milestone":67},{"platform":"Win_x64","revision":550416,"milestone":67},{"platform":"Linux_x64","revision":540276,"milestone":66},{"platform":"Mac","revision":540271,"milestone":66},{"platform":"Win_x64","revision":540270,"milestone":66},{"platform":"Mac","revision":530368,"milestone":65},{"platform":"Linux_x64","revision":530363,"milestone":65},{"platform":"Win_x64","revision":530358,"milestone":65},{"platform":"Mac","revision":520840,"milestone":64},{"platform":"Linux_x64","revision":520836,"milestone":64},{"platform":"Win_x64","revision":520834,"milestone":64},{"platform":"Linux_x64","revision":508578,"milestone":63},{"platform":"Mac","revision":508578,"milestone":63},{"platform":"Win_x64","revision":508578,"milestone":63},{"platform":"Mac","revision":499098,"milestone":62},{"platform":"Win_x64","revision":499095,"milestone":62},{"platform":"Linux_x64","revision":499089,"milestone":62},{"platform":"Linux_x64","revision":488525,"milestone":61},{"platform":"Win_x64","revision":488517,"milestone":61},{"platform":"Mac","revision":488512,"milestone":61},{"platform":"Linux_x64","revision":474896,"milestone":60},{"platform":"Mac","revision":474896,"milestone":60},{"platform":"Win_x64","revision":474896,"milestone":60},{"platform":"Linux_x64","revision":464640,"milestone":59},{"platform":"Win_x64","revision":464638,"milestone":59},{"platform":"Mac","revision":464636,"milestone":59}]};
+      }
+
+      function guessPlatform(platforms) {
+        let os = (
+          navigator.userAgent.match(/(win|linux|mac)/i)?.[1] || 'linux'
+        ).toLowerCase();
+        const platform =
+          platforms.find((platform) => platform.toLowerCase().includes(os)) ||
+          platforms[0];
+        return platform;
+      }
+
+      createApp({
+        setup() {
+          const platform = ref();
+          const platforms = ref();
+          const milestone = ref();
+          const time = ref();
+          const fullData = ref();
+          const rows = computed(() => {
+            let data = fullData.value?.filter(
+              (item) => item.platform === platform.value,
+            );
+            if (milestone.value)
+              data = data?.filter((item) =>
+                `${item.milestone}`.includes(milestone.value),
+              );
+            return data;
+          });
+          loadData().then((data) => {
+            time.value = data.time;
+            fullData.value = data.rows;
+            platforms.value = [
+              ...new Set(data.rows.map((item) => item.platform)),
+            ];
+            platform.value = guessPlatform(platforms.value);
+          });
+          return {
+            platform,
+            platforms,
+            milestone,
+            time,
+            rows,
+            getSnapshotUrl,
+          };
+        },
+      }).mount('#app');
+    </script>
+  </body>
+</html>
