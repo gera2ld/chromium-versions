@@ -11,9 +11,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: oven-sh/setup-bun@v1
-      - run: bun build-data.ts
-      - run: bun build-page.ts
+      - uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+      - run: deno run -A --unstable-ffi build-data.ts
+      - run: deno run -A build-page.ts
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
