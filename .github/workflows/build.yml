@@ -14,7 +14,7 @@ jobs:
       - uses: denoland/setup-deno@v1
         with:
           deno-version: v1.x
-      - run: deno run -A --unstable-ffi build-data.ts
+      - run: deno run -A build-data.ts
       - run: deno run -A build-page.ts
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4

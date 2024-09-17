@@ -34,10 +34,7 @@
         </label>
         <div v-if="time">
           Last updated at:
-          <span
-            class="text-green-700"
-            v-text="new Date(time).toLocaleString()"
-          ></span>
+          <span class="text-green-700" v-text="time"></span>
         </div>
       </div>
       <div
@@ -77,7 +74,7 @@
         computed,
       } from 'https://cdn.jsdelivr.net/npm/vue@3/dist/vue.esm-browser.prod.js';
 
-      initialize({}, { reset: 'tailwind' });
+      initialize({ init: { reset: 'tailwind' } });
       githubCorner('https://github.com/gera2ld/chromium-versions');
 
       function getSnapshotUrl(platform, revision) {
@@ -107,24 +104,22 @@
           const platform = ref();
           const platforms = ref();
           const milestone = ref();
-          const time = ref();
           const fullData = ref();
-          const rows = computed(() => {
-            let data = fullData.value?.filter(
-              (item) => item.platform === platform.value,
-            );
-            if (milestone.value)
-              data = data?.filter((item) =>
-                `${item.milestone}`.includes(milestone.value),
-              );
-            return data;
-          });
+          const rows = computed(() =>
+            Object.entries(fullData.value?.revisionData[platform.value] || {})
+              .map(([milestone, revision]) => ({
+                milestone,
+                revision,
+              }))
+              .sort((a, b) => b.milestone - a.milestone),
+          );
+          const time = computed(
+            () =>
+              fullData?.value && new Date(fullData.value.time).toLocaleString(),
+          );
           loadData().then((data) => {
-            time.value = data.time;
-            fullData.value = data.rows;
-            platforms.value = [
-              ...new Set(data.rows.map((item) => item.platform)),
-            ];
+            fullData.value = data;
+            platforms.value = Object.keys(data.revisionData);
             platform.value = guessPlatform(platforms.value);
           });
           return {

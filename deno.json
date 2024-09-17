@@ -1,8 +1,5 @@
 {
   "fmt": {
     "singleQuote": true
-  },
-  "imports": {
-    "$lib/": "https://raw.githubusercontent.com/gera2ld/deno-lib/main/lib/"
   }
 }
