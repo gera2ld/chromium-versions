@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chromium Versions</title>
+  </head>
+  <body>
+    <div id="app" hidden class="!block">
+      <h1 class="font-bold px-4 py-2 mr-16">
+        Download any version of Chromium from the official snapshots
+      </h1>
+      <div class="flex items-center px-4 py-2 bg-white children:mr-4">
+        <label>
+          Platform:
+          <select
+            class="outline-none border-b hover:border-blue-600 bg-transparent"
+            v-model="platform"
+          >
+            <option
+              v-for="item in platforms"
+              :key="item"
+              :value="item"
+              v-text="item"
+            ></option>
+          </select>
+        </label>
+        <label>
+          Milestone <span class="text-gray-500">(Major version)</span>:
+          <input
+            class="w-16 outline-none border-b hover:border-blue-600"
+            v-model="milestone"
+          />
+        </label>
+        <div v-if="time">
+          Last updated at:
+          <span class="text-green-700" v-text="time"></span>
+        </div>
+      </div>
+      <div
+        class="grid p-2"
+        style="grid-template-columns: repeat(3, max-content)"
+      >
+        <div
+          class="contents children:px-4 children:py-1 children:sticky children:top-0 children:font-bold children:bg-white children:border-b"
+        >
+          <div class="sticky top-0 font-bold">Milestone</div>
+          <div class="sticky top-0 font-bold">Revision</div>
+          <div class="sticky top-0 font-bold">Actions</div>
+        </div>
+        <template v-for="row in rows">
+          <div class="contents children:px-4 children:py-1">
+            <div v-text="row.milestone"></div>
+            <div v-text="row.revision"></div>
+            <div>
+              <a
+                class="text-blue-600 hover:text-blue-700 hover:underline cursor-pointer"
+                :href="getSnapshotUrl(platform, row.revision)"
+                target="_blank"
+              >
+                Download
+              </a>
+            </div>
+          </div>
+        </template>
+      </div>
+    </div>
+    <script type="module">
+      import { initialize } from 'https://cdn.jsdelivr.net/gh/gera2ld/js-lib@dist/unocss.js';
+      import { githubCorner } from 'https://cdn.jsdelivr.net/gh/gera2ld/js-lib@dist/github-corner.js';
+      import {
+        createApp,
+        ref,
+        computed,
+      } from 'https://cdn.jsdelivr.net/npm/vue@3/dist/vue.esm-browser.prod.js';
+
+      initialize({ init: { reset: 'tailwind' } });
+      githubCorner('https://github.com/gera2ld/chromium-versions');
+
+      function getSnapshotUrl(platform, revision) {
+        return `https://commondatastorage.googleapis.com/chromium-browser-snapshots/index.html?prefix=${platform}/${revision}/`;
+      }
+
+      async function loadData() {
+        return {
+  "time": "2025-05-10T11:24:12.325Z",
+  "revisionData": {
+    "Mac": {
+      "59": 464636,
+      "60": 474896,
+      "61": 488512,
+      "62": 499098,
+      "63": 508578,
+      "64": 520840,
+      "65": 530368,
+      "66": 540271,
+      "67": 550418,
+      "68": 561733,
+      "69": 576753,
+      "70": 587811,
+      "71": 599028,
+      "72": 612398,
+      "73": 625854,
+      "74": 638880,
+      "75": 652398,
+      "76": 665002,
+      "77": 681090,
+      "78": 693954,
+      "79": 706915,
+      "80": 722274,
+      "81": 737173,
+      "83": 756053,
+      "84": 768938,
+      "85": 782782,
+      "86": 800208,
+      "87": 812851,
+      "88": 827102,
+      "89": 843806,
+      "90": 857950,
+      "91": 870752,
+      "92": 885263,
+      "93": 902192,
+      "94": 911515,
+      "95": 919990,
+      "96": 929475,
+      "97": 938545,
+      "98": 950345,
+      "99": 961656,
+      "100": 972753,
+      "101": 982480,
+      "102": 992728,
+      "103": 1002907,
+      "104": 1012729,
+      "105": 1027007,
+      "106": 1036822,
+      "107": 1047708,
+      "108": 1058919,
+      "109": 1070019,
+      "110": 1083862,
+      "111": 1097561,
+      "112": 1109213,
+      "113": 1121448,
+      "114": 1135562,
+      "115": 1148078,
+      "116": 1160321,
+      "117": 1181205,
+      "118": 1192576,
+      "119": 1204193,
+      "120": 1217348,
+      "121": 1233090,
+      "122": 1250580,
+      "123": 1262506,
+      "124": 1274511,
+      "125": 1287751,
+      "126": 1300293,
+      "127": 1313161,
+      "128": 1331485,
+      "129": 1343864,
+      "130": 1355985,
+      "131": 1368518,
+      "132": 1381526,
+      "133": 1402764,
+      "134": 1415334,
+      "135": 1427237,
+      "136": 1440670,
+      "137": 1453029
+    },
+    "Win_x64": {
+      "59": 464638,
+      "60": 474896,
+      "61": 488517,
+      "62": 499095,
+      "63": 508578,
+      "64": 520834,
+      "65": 530358,
+      "66": 540270,
+      "67": 550416,
+      "68": 561727,
+      "69": 576753,
+      "70": 587811,
+      "71": 598932,
+      "72": 612429,
+      "73": 625894,
+      "74": 638880,
+      "75": 652419,
+      "76": 664998,
+      "77": 681089,
+      "78": 693951,
+      "79": 706915,
+      "80": 722274,
+      "81": 737173,
+      "83": 756057,
+      "84": 768952,
+      "85": 782776,
+      "86": 800185,
+      "87": 812845,
+      "88": 827102,
+      "89": 843807,
+      "90": 857947,
+      "91": 870758,
+      "92": 885282,
+      "93": 902192,
+      "94": 911498,
+      "95": 919990,
+      "96": 929483,
+      "97": 938545,
+      "98": 950341,
+      "99": 961656,
+      "100": 972766,
+      "101": 982435,
+      "102": 992732,
+      "103": 1002885,
+      "104": 1012699,
+      "105": 1027004,
+      "106": 1036788,
+      "107": 1047708,
+      "108": 1058931,
+      "109": 1070054,
+      "110": 1083966,
+      "111": 1097610,
+      "112": 1109208,
+      "113": 1121434,
+      "114": 1135559,
+      "115": 1148033,
+      "116": 1160303,
+      "117": 1181156,
+      "118": 1192564,
+      "119": 1204146,
+      "120": 1217360,
+      "121": 1233095,
+      "122": 1250557,
+      "123": 1262500,
+      "124": 1274518,
+      "125": 1287751,
+      "126": 1300297,
+      "127": 1313161,
+      "128": 1331469,
+      "129": 1343849,
+      "130": 1355984,
+      "131": 1368503,
+      "132": 1381539,
+      "133": 1402756,
+      "134": 1415334,
+      "135": 1427187,
+      "136": 1440665,
+      "137": 1453001
+    },
+    "Linux_x64": {
+      "59": 464640,
+      "60": 474896,
+      "61": 488525,
+      "62": 499089,
+      "63": 508578,
+      "64": 520836,
+      "65": 530363,
+      "66": 540276,
+      "67": 550422,
+      "68": 561732,
+      "69": 576753,
+      "70": 587811,
+      "71": 599034,
+      "72": 612434,
+      "73": 625894,
+      "74": 638880,
+      "75": 652421,
+      "76": 664981,
+      "77": 681090,
+      "78": 693954,
+      "79": 706915,
+      "80": 722269,
+      "81": 737173,
+      "83": 756066,
+      "84": 768959,
+      "85": 782790,
+      "86": 800217,
+      "87": 812847,
+      "88": 827102,
+      "89": 843811,
+      "90": 857949,
+      "91": 870763,
+      "92": 885264,
+      "93": 902192,
+      "94": 911494,
+      "95": 919982,
+      "96": 929511,
+      "97": 938549,
+      "98": 950363,
+      "99": 961656,
+      "100": 972765,
+      "101": 982481,
+      "102": 992733,
+      "103": 1002910,
+      "104": 1012728,
+      "105": 1027016,
+      "106": 1036826,
+      "107": 1047731,
+      "108": 1058929,
+      "109": 1070081,
+      "110": 1083987,
+      "111": 1097615,
+      "112": 1109220,
+      "113": 1121454,
+      "114": 1135561,
+      "115": 1148103,
+      "116": 1160321,
+      "117": 1181205,
+      "118": 1192586,
+      "119": 1204222,
+      "120": 1217362,
+      "121": 1233101,
+      "122": 1250580,
+      "123": 1262506,
+      "124": 1274535,
+      "125": 1287743,
+      "126": 1300309,
+      "127": 1313161,
+      "128": 1331481,
+      "129": 1343863,
+      "130": 1356007,
+      "131": 1368524,
+      "132": 1381561,
+      "133": 1402768,
+      "134": 1415334,
+      "135": 1427253,
+      "136": 1440669,
+      "137": 1453031
+    }
+  }
+};
+      }
+
+      function guessPlatform(platforms) {
+        let os = (
+          navigator.userAgent.match(/(win|linux|mac)/i)?.[1] || 'linux'
+        ).toLowerCase();
+        const platform =
+          platforms.find((platform) => platform.toLowerCase().includes(os)) ||
+          platforms[0];
+        return platform;
+      }
+
+      createApp({
+        setup() {
+          const platform = ref();
+          const platforms = ref();
+          const milestone = ref();
+          const fullData = ref();
+          const rows = computed(() =>
+            Object.entries(fullData.value?.revisionData[platform.value] || {})
+              .map(([milestone, revision]) => ({
+                milestone,
+                revision,
+              }))
+              .sort((a, b) => b.milestone - a.milestone),
+          );
+          const time = computed(
+            () =>
+              fullData?.value && new Date(fullData.value.time).toLocaleString(),
+          );
+          loadData().then((data) => {
+            fullData.value = data;
+            platforms.value = Object.keys(data.revisionData);
+            platform.value = guessPlatform(platforms.value);
+          });
+          return {
+            platform,
+            platforms,
+            milestone,
+            time,
+            rows,
+            getSnapshotUrl,
+          };
+        },
+      }).mount('#app');
+    </script>
+  </body>
+</html>
